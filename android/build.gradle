@@ -4,13 +4,27 @@ buildscript {
         minSdkVersion = 23
         compileSdkVersion = 34
         targetSdkVersion = 34
-        ndkVersion = "26.1.10909125"
-        kotlinVersion = "1.9.22"
+        kotlinVersion = "1.9.24"
+        if (System.properties['os.arch'] == "aarch64") {
+            ndkVersion = "26.1.10909125"
+        } else {
+            ndkVersion = "23.1.7779620"
+        }
     }
     repositories {
         google()
         mavenCentral()
     }
+     
+    allprojects {
+        repositories {
+            mavenCentral()
+            mavenLocal()
+            maven { url 'https://jcenter.bintray.com/' }
+            maven { url("${project(':react-native-background-fetch').projectDir}/libs") }
+        }
+    }
+    
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")

@@ -1,79 +1,93 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+## Introduction
 
-# Getting Started
+This project is a React Native application designed to showcase articles from Hacker News, with functionalities like favorite management, deletion, and offline caching. It also supports multiple languages and offers a fluid user experience using animations, optimized lists, and push notifications.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Features
 
-## Step 1: Start the Metro Server
+Fetches articles from an API (Hacker News)
+Handles offline data storage and caching
+Users can mark articles as favorites or delete them
+Push notifications for updates
+Optimized performance with FlashList
+Multilingual support with i18next
+Smooth UI animations with Lottie and Reanimated
+Dependencies Overview
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Key Libraries
 
-To start Metro, run the following command from the _root_ of your React Native project:
+- @reduxjs/toolkit: Manages global state and data fetching via RTK Query, ensuring clean code and easy-to-maintain state management.
+- @shopify/flash-list: Replaces FlatList for rendering lists efficiently, especially with large datasets, improving performance and memory usage.
+- react-native-mmkv: Used for offline storage, chosen over AsyncStorage for its better performance and smaller footprint. MMKV is significantly faster and supports larger data volumes.
+- i18next and react-i18next: Provides easy integration for multi-language support in the app, allowing dynamic localization.
+- react-native-reanimated: Handles complex animations smoothly, offering better control and performance over standard React Native animations.
+- Lottie and lottie-react-native: Used to integrate beautiful animations for splash screens and loading indicators, enhancing the user experience.
+- redux-persist: Helps persist Redux state, making sure the app state is saved across sessions, even if the user closes the app.
 
-```bash
-# using npm
-npm start
+## Other Notable Packages
 
-# OR using Yarn
-yarn start
+- react-native-device-info: Provides information about the user's device, such as the device model or unique ID.
+- react-native-localize: Detects and handles language, region, and timezone settings.
+- react-native-permissions: Simplifies requesting permissions, such as push notifications.
+- react-native-webview: Allows the display of web content within the app.
+- styled-components: Handles theming and styling in a more maintainable and dynamic way.
+
+## Why These Choices?
+
+- FlashList over FlatList: For better performance in rendering large data sets with smooth scrolling.
+- MMKV over AsyncStorage: Provides faster read/write operations and better performance overall, especially for large datasets, while consuming less memory.
+- Redux Toolkit: Simplifies state management and API integration by providing built-in tools, reducing boilerplate code.
+- Reanimated: Allows complex animations to be handled natively, improving performance and offering smoother transitions.
+
+## Folder Structure
+
+- /components: Contains reusable UI components like ArticleList and ArticleItem.
+- /screens: Contains the primary screens such as HomeScreen, FavoritesScreen.
+- /services: Includes API services (e.g., articleService.ts) and push notification handlers.
+- /redux: Manages the store, slices, and middleware configuration.
+
+## Setup
+
+To run the project:
+
+Install dependencies:
+bash
+
+```
+yarn install
+
+# or
+
+npm install
 ```
 
-## Step 2: Start your Application
+Run the app:
+bash
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+```
+npx react-native run-android
 
-### For Android
+# or
 
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+npx react-native run-ios
 ```
 
-### For iOS
+✅ Data Fetching
+✅ Offline Access
+✅ Article Viewing
+✅ Delete Functionality
 
-```bash
-# using npm
-npm run ios
+✅ Favorites
+✅ Deleted Articles View
 
-# OR using Yarn
-yarn ios
-```
+Push Notification Permission
+✅ User Preferences
+✅ Background Fetch
+Notification Interaction
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+✅ Language
+Unit Testing
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Functionality
+✅ Code Quality
+✅ UI/UX
+Documentation
