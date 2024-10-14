@@ -1,0 +1,45 @@
+{
+  "appName": {
+    "full": "HackerNews"
+  },
+  "messages": {
+    "noConnection": "Can't connect, retrying."
+  },
+  "errors": {
+    "boundaries": {
+      "fallbackScreen": {
+        "title": "Whoops! Something went wrong",
+        "description": "Sorry, an error occurred.",
+        "button": "Try again",
+        "detailsLabel": "Error details: ",
+        "detailsLabelDefaultMessage": "This is not an error, this screen will allow you to detect and view errors in the app, displaying a friendly message instead of the default white screen."
+      }
+    }
+  },
+  "alerts": {
+    "permissions": {
+      "blocked": {
+        "title": "Permission blocked",
+        "description": "Please grant permission from the app settings in your {{deviceName}}.",
+        "buttons": {
+          "buttonOne": "Go to Settings"
+        }
+      },
+      "denied": {
+        "title": "Permission required",
+        "description": "This permission is required to continue. Please grant it.",
+        "buttons": {
+          "buttonOne": "Request again"
+        }
+      }
+    }
+  },
+  "toasts": {
+    "invalidURL": "This article doesn’t have a valid URL."
+  },
+  "webviewer": {
+    "option1": "Share",
+    "option2": "Reload",
+    "option3": "Open on browser"
+  }
+}

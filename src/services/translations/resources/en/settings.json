@@ -1,0 +1,46 @@
+{
+    "settings": {
+        "screenTitle": "Settings",
+        "description": "Manage settings that improve and personalize your experience.",
+        "settings": {
+        "account": {
+            "title": "Account",
+            "items": {
+                "favorites": {
+                    "title":"Favorite articles",
+                    "description": "Items you makerd as favorites."
+                },
+                "deleted": {
+                    "title":"Deleted articles",
+                    "description": "Items you removed from feed."
+                }
+            }
+            },
+            "appPreferences": {
+                "title": "Preferences",
+                "items": {
+                    "changeLanguage": {
+                        "title": "Language",
+                        "description": "Choose your preferred language.",
+                        "languages": {
+                            "fromPhoneDevice": "From {{osDevice}}",
+                            "english": "English",
+                            "spanish": "Spanish",
+                            "french": "French",
+                            "portuguese": "Portuguese",
+                            "german": "German"
+                        }
+                    },
+                    "notifications": {
+                        "title": "Notifications",
+                        "description": "Change notification settings to your preference."
+                    },
+                    "backgroundFetcher": {
+                        "title": "Background fetch",
+                        "description": "Toggle background articles fetching"
+                    }
+                }
+            }
+        }
+    }
+}
