@@ -1,6 +1,6 @@
-## Introduction
+![settings](https://github.com/user-attachments/assets/07976a80-a40a-4367-b947-48f8b913d89a)## Introduction
 
-This project is a React Native application designed to showcase articles from Hacker News, with functionalities like favorite management, deletion, and offline caching. It also supports multiple languages and offers a fluid user experience using animations, optimized lists, and push notifications.
+This project is a React Native CLI application designed to showcase articles from Hacker News, with functionalities like favorite management, deletion, and offline caching. It also supports multiple languages and offers a fluid user experience using animations, optimized lists, and push notifications.
 
 ## Features
 
@@ -22,16 +22,27 @@ This project is a React Native application designed to showcase articles from Ha
 - ✅ Android optimization: Proguard, splitted builds, and useLegacyPackaging for better builds.
 
 ## Results
+![DOWNLOAD APK](https://drive.google.com/file/d/1WugWb25kC35c7QpdCDy1ffnnTETWHqP4/view?usp=sharing)
+ 
+#### Home (article fetching, pull action, hightlighted article)
+![home](https://github.com/user-attachments/assets/a89534a9-1de1-4df5-a8af-80ee44a432f7)
 
-### Home (article fetching, pull action, hightlighted article)
+#### Open article (url checker, oepn on in-app browser)
+![open article](https://github.com/user-attachments/assets/13efa4a9-4fc7-4da2-978c-5f87be358889)
 
-### Open article (url checker, oepn on in-app browser)
+#### Favorite (UI handler, Actions: Add, remove, clear all, show all favorites)
+![favorites](https://github.com/user-attachments/assets/bf6fc701-1d2f-428f-ac8b-20f6fcefea8c)
 
-### Favorite (UI handler, Actions: Add, remove, clear all, show all favorites)
+#### Delete (UI handler, Actions: Add, remove, clear all, show all deleted items)
+![delete](https://github.com/user-attachments/assets/98c09167-2466-4145-8af7-60a3fb6b82cd)
 
-### Delete (UI handler, Actions: Add, remove, clear all, show all deleted items)
+#### Settings (Settings screen, swtich handlers, account items)
+![Simulator Screen Recording - 15 Pro - 17 5 - 2024-10-15 at 00 46 52](https://github.com/user-attachments/assets/6a299aa2-81f8-40e5-896a-daa0a83b2530)
 
-### Settings (Settings screen, swtich handlers, account items)
+#### Offline data (Offile message in header and showing stored data)
+![Simulator Screen Recording - 15 Pro - 17 5 - 2024-10-15 at 00 48 14](https://github.com/user-attachments/assets/599dd60f-37ee-44b7-8752-b8184a59e16b)
+
+
 
 ## Key Libraries out-of-box (better than most populars)
 
