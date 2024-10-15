@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {format} from 'date-fns';
 import {useGetItemsQuery} from '@hooks/api';
-import {Logger} from '@services';
+import {Logger, useCopy} from '@services';
 import {filterArrayByKeys} from '@utils/functions';
 import {ApplicationScreenProps, Article} from '@types';
 import {
@@ -11,6 +11,7 @@ import {
   useBackgroundWorker,
   useToast,
   useAppPreferences,
+  useNotifications,
 } from '@hooks';
 import {useNavigation} from '@react-navigation/native';
 import {urlValidator} from '@utils/validators';
@@ -18,10 +19,11 @@ import {urlValidator} from '@utils/validators';
 export const useHome = () => {
   const navigation: ApplicationScreenProps = useNavigation();
   const {checkUrl} = urlValidator();
+  const {topic} = useAppPreferences();
+  const {getCopyValue} = useCopy();
   const {deletedArticlesItems, removedArticles} = useArticles();
   const {handleFavorite} = useArticlesFavorites();
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const {topic} = useAppPreferences();
   const {data, isLoading, error, refetch} = useGetItemsQuery(topic);
   const {
     data: items,
@@ -33,10 +35,6 @@ export const useHome = () => {
     isLoading,
     error,
   });
-
-  useEffect(() => {
-    console.log('ewe', {topic, dataf: data?.hits[0].objectID});
-  }, [topic, data]);
 
   const articlesData = useMemo(() => {
     let articleList: Article[] = [];
@@ -95,6 +93,22 @@ export const useHome = () => {
   useEffect(() => {
     startFetch();
   }, [status, error, startFetch]);
+
+  const {isPermissionGranted} = useNotifications({
+    backgroundWorkerTask:
+      'com.transistorsoft.getArticlesInBackgroundNotifications',
+    onFetchData: onRefresh,
+    notificationTitle: getCopyValue(
+      'common:alerts.notifications.newPosts.title',
+      {
+        topic,
+      },
+    ),
+    notificationBody: getCopyValue('common:alerts.notifications.newPosts.body'),
+  });
+  useEffect(() => {
+    Logger.log('hasPermission', {isPermissionGranted});
+  }, [isPermissionGranted]);
 
   const todayDate = useMemo(() => format(new Date(), 'cccc, LLLL do'), []);
 

@@ -32,6 +32,12 @@
           "buttonOne": "Solicitar de nuevo"
         }
       }
+    },
+    "notifications": {
+      "newPosts": {
+        "title": "Nuevos articulos",
+        "body": "Hay nuevos articulos de {{topic}} en tu feed."
+      }
     }
   },
   "toasts": {

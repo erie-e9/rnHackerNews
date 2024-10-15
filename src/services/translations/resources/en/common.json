@@ -32,6 +32,12 @@
           "buttonOne": "Request again"
         }
       }
+    },
+    "notifications": {
+      "newPosts": {
+        "title": "New posts",
+        "body": "Your feed has new posts about {{topic}}."
+      }
     }
   },
   "toasts": {

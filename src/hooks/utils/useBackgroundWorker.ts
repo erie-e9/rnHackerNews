@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Alert } from 'react-native';
 import BackgroundFetch, { BackgroundFetchConfig } from 'react-native-background-fetch';
-import { format } from 'date-fns';
 import { Logger } from '@services';
 
 type FetchStatus = 'active' | 'inactive' | 'timeout';
@@ -9,10 +8,8 @@ type FetchStatus = 'active' | 'inactive' | 'timeout';
 export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>, config?: BackgroundFetchConfig) => {
     const [status, setStatus] = useState<FetchStatus>('inactive');
     const [error, setError] = useState<string | null>(null);
-    const timestamp = format(new Date(), 'MM/dd/yyyy - kk:mm:t');
 
     const configureFetch = useCallback(() => {
-
         try {
             BackgroundFetch.configure(
                 {
@@ -31,17 +28,17 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
                 },
                 async () => {
                     setStatus('active');
-                    Logger.log(`[BackgroundFetch] Task: ${taskId} is being executed - ${timestamp}`);
+                    Logger.log(`[BackgroundFetch] Task: ${taskId} is being executed`);
 
                     try {
                         // Trigger background task
                         if (taskFn) await taskFn();
                         BackgroundFetch.finish(taskId); // Task finished successfully.
-                        Logger.log(`[BackgroundFetch] Task ${taskId} finished successfuly - ${timestamp}`);
+                        Logger.log(`[BackgroundFetch] Task ${taskId} finished successfuly`);
                     } catch (err: any) {
                         setError(err.message);
                         BackgroundFetch.finish(taskId); // Task finished if there's an error.
-                        Logger.error(`[BackgroundFetch] Task ${taskId} failed - ${timestamp}`);
+                        Logger.error(`[BackgroundFetch] Task ${taskId} failed`);
                     } finally {
                         setStatus('inactive');
                     }
@@ -49,7 +46,7 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
                 (timeoutId) => {
                     // Timeout callback 
                     setStatus('timeout');
-                    Logger.warn(`[BackgroundFetch] Task ${timeoutId} timeout - ${timestamp}`);
+                    Logger.warn(`[BackgroundFetch] Task ${timeoutId} timeout`);
                     BackgroundFetch.finish(timeoutId);
                 }
             );
@@ -78,7 +75,7 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
 
     const startFetch = useCallback(() => {
         BackgroundFetch.start().then(() => {
-            Logger.log(`BackgroundFetch has been started - ${timestamp}`);
+            Logger.log(`BackgroundFetch has been started`);
         });
     }, []);
 
@@ -88,7 +85,7 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
         */
 
         BackgroundFetch.stop(taskId).then(() => {
-            Logger.log(`BackgroundFetch has been stopped - ${timestamp}`);
+            Logger.log(`BackgroundFetch has been stopped`);
         });
     }, []);
 
