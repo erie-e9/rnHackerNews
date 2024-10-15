@@ -15,8 +15,6 @@ import {AnimatedButton, TransformAnimation} from '@components/animated';
 import {
   Title,
   CommentText,
-  AuthButton,
-  AuthButtonContainer,
   CardContainer,
   StyledTextContainer,
   MetaInfo,
@@ -78,7 +76,7 @@ const Hightlights: React.FC<HightlightsProps> = ({
       if (url.endsWith('/') && article.story_id) {
         url = `${url}${article.story_id}`;
       }
-      onTouch('url');
+      onTouch(url);
     }
   }, []);
 
@@ -137,15 +135,15 @@ const Hightlights: React.FC<HightlightsProps> = ({
             <OpenFavoriteArticlepButtonContainer>
               <AnimatedButton
                 testID="HightLightsAnimatedButton"
-                source="heart2"
-                size={120}
+                source="delete"
+                size={25}
                 onPress={leftAction ? () => leftAction(article) : undefined}
               />
             </OpenFavoriteArticlepButtonContainer>
             <OpenArticlepButtonContainer>
               <AnimatedButton
                 testID="HightLightsAnimatedButton"
-                source="trash"
+                source="heart2"
                 size={120}
                 onPress={leftAction ? () => leftAction(article) : undefined}
               />

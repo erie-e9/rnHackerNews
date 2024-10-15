@@ -5,6 +5,7 @@ import {
     fetchBaseQuery,
     FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
+import { Logger } from '@services';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.API_URL,
@@ -18,7 +19,7 @@ const baseQueryWithInterceptor: BaseQueryFn<
     const result = await baseQuery(args, api, extraOptions);
 
     if (result.error && result.error.status === 401) {
-        console.log('Unauthorized.');
+        Logger.log('Unauthorized.');
     }
 
     return result;

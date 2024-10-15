@@ -4,6 +4,7 @@ export {
   changeMode,
   switchNotifications,
   switchBackgroundFetch,
+  changeTopic,
 } from '@slices/shared/appPreferences';
 export { default as articles, storeArticles, deletedArticles, deleteAllArticles } from '@redux/store/slices/shared/articles';
 export { default as favorites, addFavorite, removeFavorite, toggleFavorite, deleteAllFavorites } from '@redux/store/slices/shared/favorites';

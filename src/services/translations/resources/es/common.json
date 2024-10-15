@@ -1,0 +1,45 @@
+{
+  "appName": {
+    "full": "HackerNews"
+  },
+  "messages": {
+    "noConnection": "No se puede conectar, reintentando."
+  },
+  "errors": {
+    "boundaries": {
+      "fallbackScreen": {
+        "title": "¡Vaya! Algo salió mal",
+        "description": "Lo sentimos, ocurrió un error.",
+        "button": "Intentar de nuevo",
+        "detailsLabel": "Detalles del error: ",
+        "detailsLabelDefaultMessage": "Esto no es un error, esta pantalla te permitirá detectar y ver errores en la aplicación, mostrando un mensaje amigable en lugar de la pantalla blanca predeterminada."
+      }
+    }
+  },
+  "alerts": {
+    "permissions": {
+      "blocked": {
+        "title": "Permiso bloqueado",
+        "description": "Por favor, concede el permiso desde la configuración de la app en tu {{deviceName}}.",
+        "buttons": {
+          "buttonOne": "Ir a Configuración"
+        }
+      },
+      "denied": {
+        "title": "Permiso requerido",
+        "description": "Este permiso es necesario para continuar. Por favor, concédelo.",
+        "buttons": {
+          "buttonOne": "Solicitar de nuevo"
+        }
+      }
+    }
+  },
+  "toasts": {
+    "invalidURL": "Este artículo no tiene una URL válida."
+  },
+  "webviewer": {
+    "option1": "Compartir",
+    "option2": "Recargar",
+    "option3": "Abrir en el navegador"
+  }
+}

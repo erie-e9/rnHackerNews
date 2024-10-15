@@ -31,6 +31,10 @@
                             "german": "German"
                         }
                     },
+                    "topicSelector": {
+                        "title": "Select topic",
+                        "description": "Select topic to get news about"
+                    },
                     "notifications": {
                         "title": "Notifications",
                         "description": "Change notification settings to your preference."

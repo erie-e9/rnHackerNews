@@ -33,8 +33,6 @@ export const ArticleList: React.FC<ArticleListProps> = ({
   }, [isFetching, refreshing, setRefreshing, refetch]);
 
   const onRefresh = useCallback(async () => {
-    console.log('ewe onRefresh');
-
     await setRefreshing(true);
     await refetch?.();
     await setRefreshing(false);
@@ -59,7 +57,7 @@ export const ArticleList: React.FC<ArticleListProps> = ({
           estimatedItemSize={200}
           ListEmptyComponent={
             <EmptyContainer>
-              <EmptyText>No articles available.</EmptyText>
+              <EmptyText type="Body1">{'home:noArticles'}</EmptyText>
             </EmptyContainer>
           }
         />

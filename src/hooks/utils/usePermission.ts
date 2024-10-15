@@ -9,6 +9,7 @@ import {
   PERMISSIONS,
   requestMultiple,
 } from 'react-native-permissions';
+import { Logger } from '@services';
 import { useAppAlerts } from './useAppAlerts';
 
 interface PermissionStatus {
@@ -29,7 +30,7 @@ export const usePermission = (): PermissionStatus => {
   >('unavailable');
 
   const openAppSettings = () => {
-    openSettings().catch(() => console.warn('cannot open settings'));
+    openSettings().catch(() => Logger.warn('cannot open settings'));
   };
 
   const handlePermissionResponse = useCallback((result: string, permission: Permission) => {

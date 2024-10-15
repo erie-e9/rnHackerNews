@@ -1,7 +1,8 @@
-import { format } from 'date-fns';
 import { useEffect, useState, useCallback } from 'react';
 import { Alert } from 'react-native';
 import BackgroundFetch, { BackgroundFetchConfig } from 'react-native-background-fetch';
+import { format } from 'date-fns';
+import { Logger } from '@services';
 
 type FetchStatus = 'active' | 'inactive' | 'timeout';
 
@@ -30,17 +31,17 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
                 },
                 async () => {
                     setStatus('active');
-                    console.log(`[BackgroundFetch] Task: ${taskId} is being executed - ${timestamp}`);
+                    Logger.log(`[BackgroundFetch] Task: ${taskId} is being executed - ${timestamp}`);
 
                     try {
                         // Trigger background task
                         if (taskFn) await taskFn();
                         BackgroundFetch.finish(taskId); // Task finished successfully.
-                        console.log(`[BackgroundFetch] Task ${taskId} finished successfuly - ${timestamp}`);
+                        Logger.log(`[BackgroundFetch] Task ${taskId} finished successfuly - ${timestamp}`);
                     } catch (err: any) {
                         setError(err.message);
                         BackgroundFetch.finish(taskId); // Task finished if there's an error.
-                        console.error(`[BackgroundFetch] Task ${taskId} failed - ${timestamp}`);
+                        Logger.error(`[BackgroundFetch] Task ${taskId} failed - ${timestamp}`);
                     } finally {
                         setStatus('inactive');
                     }
@@ -48,7 +49,7 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
                 (timeoutId) => {
                     // Timeout callback 
                     setStatus('timeout');
-                    console.warn(`[BackgroundFetch] Task ${timeoutId} timeout - ${timestamp}`);
+                    Logger.warn(`[BackgroundFetch] Task ${timeoutId} timeout - ${timestamp}`);
                     BackgroundFetch.finish(timeoutId);
                 }
             );
@@ -57,27 +58,27 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
             BackgroundFetch.status((status) => {
                 switch (status) {
                     case BackgroundFetch.STATUS_RESTRICTED:
-                        console.log('Background fetch is restricted.');
+                        Logger.log('Background fetch is restricted.');
                         Alert.alert('Background Fetch', 'Background fetch is restricted on this device.');
                         break;
                     case BackgroundFetch.STATUS_DENIED:
-                        console.log('Background fetch is denied.');
+                        Logger.log('Background fetch is denied.');
                         Alert.alert('Background Fetch', 'Background fetch is denied on this device.');
                         break;
                     case BackgroundFetch.STATUS_AVAILABLE:
-                        console.log('Background fetch is enabled and available.');
+                        Logger.log('Background fetch is enabled and available.');
                         break;
                 }
             });
         } catch (err: any) {
-            console.error('Background fetch configuration failed:', err);
+            Logger.error('Background fetch configuration failed:', err);
             setError(err?.message);
         }
     }, [taskFn, config?.minimumFetchInterval]);
 
     const startFetch = useCallback(() => {
         BackgroundFetch.start().then(() => {
-            console.log(`BackgroundFetch has been started - ${timestamp}`);
+            Logger.log(`BackgroundFetch has been started - ${timestamp}`);
         });
     }, []);
 
@@ -87,7 +88,7 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
         */
 
         BackgroundFetch.stop(taskId).then(() => {
-            console.log(`BackgroundFetch has been stopped - ${timestamp}`);
+            Logger.log(`BackgroundFetch has been stopped - ${timestamp}`);
         });
     }, []);
 

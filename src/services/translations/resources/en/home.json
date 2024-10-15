@@ -1,3 +1,4 @@
 {
-  "helloUser": "Hi, my name is $t(common:appName.full)"
+  "helloUser": "Hi, my name is $t(common:appName.full)",
+  "noArticles": "No articles yet"
 }

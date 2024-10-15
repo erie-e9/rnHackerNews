@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { screen_height } from '@utils/functions';
 import { Typography } from '@components/atoms';
 
 export const ListContainer = styled.View`
@@ -8,6 +9,7 @@ export const ListContainer = styled.View`
 
 export const EmptyContainer = styled.View`
   flex: 1;
+  height: ${screen_height}px;
   justify-content: center;
   align-items: center;
 `;

@@ -1,0 +1,4 @@
+{
+  "helloUser": "Hola, mi nombre es $t(common:appName.full)",
+  "noArticles": "Sin artículos por el momento."
+}

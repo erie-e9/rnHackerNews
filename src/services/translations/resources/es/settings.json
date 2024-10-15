@@ -1,0 +1,50 @@
+{
+    "settings": {
+        "screenTitle": "Configuración",
+        "description": "Gestiona las configuraciones que mejoran y personalizan tu experiencia.",
+        "settings": {
+            "account": {
+                "title": "Cuenta",
+                "items": {
+                    "favorites": {
+                        "title": "Artículos favoritos",
+                        "description": "Elementos que marcaste como favoritos."
+                    },
+                    "deleted": {
+                        "title": "Artículos eliminados",
+                        "description": "Elementos que eliminaste del feed."
+                    }
+                }
+            },
+            "appPreferences": {
+                "title": "Preferencias",
+                "items": {
+                    "changeLanguage": {
+                        "title": "Idioma",
+                        "description": "Elige tu idioma preferido.",
+                        "languages": {
+                            "fromPhoneDevice": "Desde {{osDevice}}",
+                            "english": "Inglés",
+                            "spanish": "Español",
+                            "french": "Francés",
+                            "portuguese": "Portugués",
+                            "german": "Alemán"
+                        }
+                    },
+                    "topicSelector": {
+                        "title": "Seleccionar tema",
+                        "description": "Selecciona el tema para recibir noticias"
+                    },
+                    "notifications": {
+                        "title": "Notificaciones",
+                        "description": "Cambia la configuración de notificaciones según tu preferencia."
+                    },
+                    "backgroundFetcher": {
+                        "title": "Actualización en segundo plano",
+                        "description": "Activar/desactivar la obtención de artículos en segundo plano"
+                    }
+                }
+            }
+        }
+    }
+}

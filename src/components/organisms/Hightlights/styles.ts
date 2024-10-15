@@ -56,17 +56,6 @@ export interface StyledButtonProps {
   width?: string | number;
 }
 
-export const AuthButtonContainer = styled.View`
-  /* position: absolute; */
-  width: ${getNormalizedHorizontalSize(100)}px;
-  height: auto;
-  /* bottom: ${getNormalizedVerticalSize(3)}px; */
-  right: ${getNormalizedHorizontalSize(6)}px;
-  align-self: flex-end;
-  justify-content: flex-end;
-`;
-
-
 export const StyledTextContainer = styled(Touchable)`
   border-radius: 15px;
   position: absolute;
@@ -100,6 +89,5 @@ export const OpenArticlepButtonContainer = styled.View`
   border-radius: 20px;
   justify-content: center;
   align-items: center;
-  transform: rotate(180deg);
   background-color: ${({ theme }) => theme.tokens.colors.primary600};
 `;

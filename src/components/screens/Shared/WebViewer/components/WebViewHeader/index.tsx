@@ -23,7 +23,6 @@ const WebViewHeader: React.FC<WebViewHeaderProps> = ({
 }) => {
   const ishttps = url.includes('https');
   const splittedUrl = url.split(/(?=:\/\/)/g);
-  console.log('ewewe', {splittedUrl});
 
   const menuHandler = useCallback((): void => {
     onReload?.();

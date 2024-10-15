@@ -7,5 +7,6 @@ export default function () {
     openOnBrowser: require('@assets/shared/animations/openOnBrowser.lottie'),
     menu: require('@assets/shared/animations/menu.lottie'),
     reload: require('@assets/shared/animations/reload.lottie'),
+    delete: require('@assets/shared/animations/delete.json'),
   };
 }

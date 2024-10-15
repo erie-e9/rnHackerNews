@@ -11,13 +11,8 @@ const articleSlice = createSlice({
   name: 'articles',
   initialState,
   reducers: {
-    storeArticles: (state, { payload }: PayloadAction<Article>) => {
-      const existingArticle = state.savedArticlesItems.find(
-        article => article.objectID === payload.objectID,
-      );
-      if (!existingArticle) {
-        state.savedArticlesItems.push(payload);
-      }
+    storeArticles: (state, { payload }: PayloadAction<Article[]>) => {
+      state.savedArticlesItems = payload;
     },
     deletedArticles: (state, { payload }: PayloadAction<Article>) => {
       const existingArticle = state.deletedArticlesItems.find(

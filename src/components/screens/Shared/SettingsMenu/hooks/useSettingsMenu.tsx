@@ -1,11 +1,10 @@
 import {useCallback, useMemo} from 'react';
-import {Platform} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Logger, useCopy} from '@services';
+import {useCopy} from '@services';
 import {type ApplicationScreenProps, type MenuItemProps} from '@types';
-import {useAppAlerts, useAppPreferences, useBackgroundWorker} from '@hooks';
+import {useAppPreferences, useBackgroundWorker} from '@hooks';
 import {Switch} from '@components/molecules';
-import * as resources from '@services/translations/resources';
 import languagesList from '@assets/shared/languagesList.json';
 
 export const useSettingsMenu = (): {
@@ -17,25 +16,15 @@ export const useSettingsMenu = (): {
     'com.transistorsoft.getArticlesInBackground',
   );
   const {
-    mode,
+    switchLanguage,
     language,
     chageSwitchNotifications,
     notifications,
     changeSwitchBackgroundFetch,
     backgroundFetch,
+    switchTopic,
+    topic,
   } = useAppPreferences();
-
-  const currentModeLabel = useMemo(() => {
-    if (!mode) {
-      return getCopyValue(
-        'settings:settings.settings.items.appPreferences.items.changeAppearance.modes.systemMode',
-        {
-          osDevice: Platform.OS === 'ios' ? 'iOS' : 'Android',
-        },
-      );
-    }
-    return `settings:settings.settings.items.appPreferences.items.changeAppearance.modes.${mode}Mode`;
-  }, [mode, getCopyValue]);
 
   const toggleSwitch = useCallback(
     async (value: boolean, type: string) => {
@@ -52,6 +41,18 @@ export const useSettingsMenu = (): {
     },
     [notifications, backgroundFetch],
   );
+
+  const changeTopic = useCallback(() => {
+    Alert.alert(
+      'Change tpoic news',
+      'Update the the topic of the news app shows you',
+      [
+        {text: 'Android', onPress: () => switchTopic('android')},
+        {text: 'iOS', onPress: () => switchTopic('ios')},
+        {text: 'Mobile', onPress: () => switchTopic('mobile')},
+      ],
+    );
+  }, []);
 
   const SwitcBackgroundFetch = useMemo(() => {
     return (
@@ -78,6 +79,22 @@ export const useSettingsMenu = (): {
       />
     );
   }, [notifications, toggleSwitch]);
+
+  const showLanguageModal = useCallback(() => {
+    const alertTitle = getCopyValue(
+      'settings:settings.settings.appPreferences.items.changeLanguage.description',
+    );
+    Alert.alert(alertTitle, '', [
+      {
+        text: 'English',
+        onPress: () => switchLanguage('en'),
+      },
+      {
+        text: 'Spanish',
+        onPress: () => switchLanguage('es'),
+      },
+    ]);
+  }, []);
 
   const listItems = useMemo(() => {
     const accountItems: MenuItemProps['items'] = [
@@ -107,6 +124,16 @@ export const useSettingsMenu = (): {
 
     const appPreferencesItems: MenuItemProps['items'] = [
       {
+        testID: 'topicSelectorButton',
+        title:
+          'settings:settings.settings.appPreferences.items.topicSelector.title',
+        description:
+          'settings:settings.settings.appPreferences.items.topicSelector.description',
+        onPress: () => changeTopic(),
+        selectedOption: topic,
+        disabled: false,
+      },
+      {
         testID: 'notificationsButton',
         title:
           'settings:settings.settings.appPreferences.items.notifications.title',
@@ -125,6 +152,24 @@ export const useSettingsMenu = (): {
         leftIcon: 'passwordfingerprint',
         disabled: false,
       },
+      {
+        testID: 'preferencesChangeLanguageButton',
+        title:
+          'settings:settings.settings.appPreferences.items.changeLanguage.title',
+        description:
+          'settings:settings.settings.appPreferences.items.changeLanguage.description',
+        selectedOption: `${
+          language !== null
+            ? languagesList[language].nativeName
+            : getCopyValue(
+                'settings:settings.settings.appPreferences.items.changeLanguage.languages.fromPhoneDevice',
+                {
+                  osDevice: Platform.OS === 'ios' ? 'iOS' : 'Android',
+                },
+              )
+        }`,
+        onPress: showLanguageModal,
+      },
     ];
 
     return [
@@ -137,7 +182,7 @@ export const useSettingsMenu = (): {
         items: appPreferencesItems,
       },
     ];
-  }, [currentModeLabel, language, toggleSwitch]);
+  }, [language, toggleSwitch, topic]);
 
   return {
     listItems,

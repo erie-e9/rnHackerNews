@@ -38,7 +38,7 @@ export const DeletedArticles: React.FC<HomeProps> = ({navigation}) => {
             useHomeHook.articlesData.highlightedArticle && (
               <Hightlights
                 article={useHomeHook.articlesData.highlightedArticle}
-                leftAction={useHomeHook.addFavorite}
+                leftAction={useHomeHook.deleteArticles}
                 rightAction={useHomeHook.addFavorite}
                 onTouch={useHomeHook.openArticle}
               />

@@ -6,7 +6,7 @@ import { type ArticlesState } from '@slices/types/articles';
 import { Article } from '@types';
 
 export const useArticles = (): {
-    saveArticles: (articles: Article) => void;
+    saveArticles: (articles: Article[]) => void;
     savedArticlesItems: Array<Article>;
     deletedArticlesItems: Array<Article>;
     removedArticles: (removedArticleParam: Article) => void;
@@ -18,13 +18,13 @@ export const useArticles = (): {
         (state: { articles: ArticlesState }) => state.articles,
     );
 
-    const saveArticles = useCallback((articles: Article): void => {
+    const saveArticles = useCallback((articles: Article[]) => {
         try {
             dispatch(storeArticles(articles));
         } catch (error) {
             Logger.error('[useArticles] saveArticles:', { error });
         }
-    }, []);
+    }, [dispatch]);
 
     const removedArticles = useCallback((removedArticle: Article): void => {
         try {
@@ -32,7 +32,7 @@ export const useArticles = (): {
         } catch (error) {
             Logger.error('[useArticles] removedArticles:', { error });
         }
-    }, []);
+    }, [dispatch]);
 
     const removedAllArticles = useCallback((): void => {
         try {
@@ -40,7 +40,7 @@ export const useArticles = (): {
         } catch (error) {
             Logger.error('[useArticles] removedAllArticles:', { error });
         }
-    }, []);
+    }, [dispatch]);
 
     return {
         savedArticlesItems,

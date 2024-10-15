@@ -6,44 +6,57 @@ import {
   changeLanguage,
   switchNotifications,
   switchBackgroundFetch,
+  changeTopic,
 } from '@slices/shared';
 import {
+  type Topic,
   type AppPreferencesState,
   type Language,
   type Mode,
 } from '@slices/types/appPreferences';
 
 export const useAppPreferences = (): {
-  switchMode: (modeParam: Mode) => void;
+  switchMode: (mode: Mode) => void;
   mode: Mode;
   language: Language;
-  switchLanguage: (languageParam: Language) => void;
+  switchLanguage: (language: Language) => void;
   chageSwitchNotifications: (notifications: boolean) => void;
   notifications: boolean;
   changeSwitchBackgroundFetch: (backgroundFetch: boolean) => void;
   backgroundFetch: boolean;
+  switchTopic: (topic: Topic) => void;
+  topic: Topic;
 } => {
   const dispatch = useDispatch();
 
-  const { mode, language, notifications, backgroundFetch } = useSelector(
+  const { mode, language, notifications, backgroundFetch, topic } = useSelector(
     (state: { appPreferences: AppPreferencesState }) => state.appPreferences,
   );
 
-  const switchMode = useCallback((modeParam: Mode): void => {
+  const switchMode = useCallback((mode: Mode): void => {
     try {
-      dispatch(changeMode({ mode: modeParam }));
+      dispatch(changeMode({ mode }));
     } catch (error) {
       Logger.error('[useAppPreferences] switchMode:', { error });
     }
   }, []);
 
-  const switchLanguage = useCallback((languageParam: Language): void => {
+
+  const switchLanguage = useCallback((language: Language): void => {
     try {
-      dispatch(changeLanguage({ language: languageParam }));
+      dispatch(changeLanguage({ language }));
     } catch (error) {
       Logger.error('[useAppPreferences] switchLanguage:', { error });
     } finally {
-      changeLanguageApp(languageParam);
+      changeLanguageApp(language);
+    }
+  }, []);
+
+  const switchTopic = useCallback((topic: Topic): void => {
+    try {
+      dispatch(changeTopic({ topic }));
+    } catch (error) {
+      Logger.error('[useAppPreferences] switchMode:', { error });
     }
   }, []);
 
@@ -72,5 +85,7 @@ export const useAppPreferences = (): {
     notifications,
     changeSwitchBackgroundFetch,
     backgroundFetch,
+    switchTopic,
+    topic,
   };
 };

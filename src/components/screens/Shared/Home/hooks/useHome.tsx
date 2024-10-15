@@ -10,6 +10,7 @@ import {
   useArticlesFavorites,
   useBackgroundWorker,
   useToast,
+  useAppPreferences,
 } from '@hooks';
 import {useNavigation} from '@react-navigation/native';
 import {urlValidator} from '@utils/validators';
@@ -18,33 +19,33 @@ export const useHome = () => {
   const navigation: ApplicationScreenProps = useNavigation();
   const {checkUrl} = urlValidator();
   const {deletedArticlesItems, removedArticles} = useArticles();
-  const {handleFavorite, favoriteArticles} = useArticlesFavorites();
+  const {handleFavorite} = useArticlesFavorites();
   const [isRefreshing, setIsRefreshing] = useState(false);
-
-  const {data, isLoading, error, refetch} = useGetItemsQuery('books');
+  const {topic} = useAppPreferences();
+  const {data, isLoading, error, refetch} = useGetItemsQuery(topic);
   const {
     data: items,
     loading,
     error: cacheError,
-    refetch: cacheRefetch,
   } = useOfflineCache({
     storageKey: 'articles',
-    data,
+    data: data?.hits,
     isLoading,
     error,
-    refetch,
   });
+
+  useEffect(() => {
+    console.log('ewe', {topic, dataf: data?.hits[0].objectID});
+  }, [topic, data]);
 
   const articlesData = useMemo(() => {
     let articleList: Article[] = [];
     let highlightedArticle: Article | null = null;
 
-    if (items?.hits) {
-      const filteredArticles = filterArrayByKeys(
-        items.hits,
-        deletedArticlesItems,
-        ['objectID'],
-      );
+    if (items) {
+      const filteredArticles = filterArrayByKeys(items, deletedArticlesItems, [
+        'objectID',
+      ]);
       highlightedArticle = filteredArticles[0] || null;
       articleList = filteredArticles.slice(1);
     }
@@ -53,15 +54,14 @@ export const useHome = () => {
       articles: articleList,
       highlightedArticle,
     };
-  }, [items, deletedArticlesItems]);
+  }, [items, data, deletedArticlesItems]);
 
-  useEffect(() => {
-    console.log('ewe', {favoriteArticles: favoriteArticles.length});
-  }, [favoriteArticles]);
-
-  const addFavorite = useCallback((article: Article) => {
-    handleFavorite(article);
-  }, []);
+  const addFavorite = useCallback(
+    (article: Article) => {
+      handleFavorite(article);
+    },
+    [handleFavorite],
+  );
 
   const deleteArticles = useCallback(
     (article: Article) => {
@@ -73,14 +73,13 @@ export const useHome = () => {
   const onRefresh = useCallback(async () => {
     try {
       setIsRefreshing(true);
-      // await refetch();
-      cacheRefetch();
+      await refetch();
     } catch (error) {
       Logger.log('useHome - onRefresh', {error});
     } finally {
       setIsRefreshing(false);
     }
-  }, [cacheRefetch]);
+  }, [refetch]);
 
   // Background worker setup
   const {
@@ -103,7 +102,6 @@ export const useHome = () => {
     async (url?: string): Promise<void> => {
       if (url) {
         const isValidUrl = await checkUrl(url);
-        console.log('ewewe openArticle', {isValidUrl});
         if (isValidUrl) {
           await navigation.navigate('Shared', {
             screen: 'WebViewer',

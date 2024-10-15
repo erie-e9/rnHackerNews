@@ -6,6 +6,7 @@ const initialState: Partial<AppPreferencesState> = {
   language: null,
   notifications: false,
   backgroundFetch: false,
+  topic: 'mobile'
 };
 
 const appPreferencesSlice = createSlice({
@@ -23,11 +24,14 @@ const appPreferencesSlice = createSlice({
     },
     switchBackgroundFetch: (state, { payload: { backgroundFetch } }) => {
       state.backgroundFetch = backgroundFetch;
+    },
+    changeTopic: (state, { payload: { topic } }) => {
+      state.topic = topic;
     }
   },
 });
 
-export const { changeMode, changeLanguage, switchNotifications, switchBackgroundFetch } =
+export const { changeMode, changeLanguage, switchNotifications, switchBackgroundFetch, changeTopic } =
   appPreferencesSlice.actions;
 
 export default appPreferencesSlice.reducer;

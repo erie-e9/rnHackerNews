@@ -46,7 +46,7 @@ export const Toast = () => {
   const animatedStyle = useAnimatedStyle(() => {
     return {opacity: animatedOpacity.value};
   });
-  const textColor = darkMode ? 'secondary900' : 'tertiary50';
+  const textColor = darkMode ? 'tertiary50' : 'secondary900';
 
   const colorTextStatus: ColorStatus = {
     info: textColor,

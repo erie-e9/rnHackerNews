@@ -4,16 +4,36 @@ This project is a React Native application designed to showcase articles from Ha
 
 ## Features
 
-Fetches articles from an API (Hacker News)
-Handles offline data storage and caching
-Users can mark articles as favorites or delete them
-Push notifications for updates
-Optimized performance with FlashList
-Multilingual support with i18next
-Smooth UI animations with Lottie and Reanimated
-Dependencies Overview
+- ✅ Fetches articles from an API (Hacker News).
+- ✅ Handles offline data storage and caching.
+- ✅ Users can mark articles as favorites or delete them from home and create an historial.
+- ✅ Article webviewer screen.
+- ✅ Push notifications.
+- ✅ Optimized performance with FlashList.
+- ✅ Multilingual support with i18next.
+- ✅ Smooth UI animations with Lottie and Reanimated.
+- ✅ Home: First article as highlight UI.
+- ✅ Settings: Toggle Background fetching and notifications.
+- ⭕️ Unit testing: Pending...
+- ✅ Architecture: Solid principles, Atomic design, KISS and DRY, Clean code.
+- ✅ Well performanced code.
+- ✅ UI/UX/DX.
+- ✅ Custom hooks for maintenable code
+- ✅ Android optimization: Proguard, splitted builds, and useLegacyPackaging for better builds.
 
-## Key Libraries
+## Results
+
+### Home (article fetching, pull action, hightlighted article)
+
+### Open article (url checker, oepn on in-app browser)
+
+### Favorite (UI handler, Actions: Add, remove, clear all, show all favorites)
+
+### Delete (UI handler, Actions: Add, remove, clear all, show all deleted items)
+
+### Settings (Settings screen, swtich handlers, account items)
+
+## Key Libraries out-of-box (better than most populars)
 
 - @reduxjs/toolkit: Manages global state and data fetching via RTK Query, ensuring clean code and easy-to-maintain state management.
 - @shopify/flash-list: Replaces FlatList for rendering lists efficiently, especially with large datasets, improving performance and memory usage.
@@ -22,28 +42,7 @@ Dependencies Overview
 - react-native-reanimated: Handles complex animations smoothly, offering better control and performance over standard React Native animations.
 - Lottie and lottie-react-native: Used to integrate beautiful animations for splash screens and loading indicators, enhancing the user experience.
 - redux-persist: Helps persist Redux state, making sure the app state is saved across sessions, even if the user closes the app.
-
-## Other Notable Packages
-
-- react-native-device-info: Provides information about the user's device, such as the device model or unique ID.
-- react-native-localize: Detects and handles language, region, and timezone settings.
-- react-native-permissions: Simplifies requesting permissions, such as push notifications.
-- react-native-webview: Allows the display of web content within the app.
 - styled-components: Handles theming and styling in a more maintainable and dynamic way.
-
-## Why These Choices?
-
-- FlashList over FlatList: For better performance in rendering large data sets with smooth scrolling.
-- MMKV over AsyncStorage: Provides faster read/write operations and better performance overall, especially for large datasets, while consuming less memory.
-- Redux Toolkit: Simplifies state management and API integration by providing built-in tools, reducing boilerplate code.
-- Reanimated: Allows complex animations to be handled natively, improving performance and offering smoother transitions.
-
-## Folder Structure
-
-- /components: Contains reusable UI components like ArticleList and ArticleItem.
-- /screens: Contains the primary screens such as HomeScreen, FavoritesScreen.
-- /services: Includes API services (e.g., articleService.ts) and push notification handlers.
-- /redux: Manages the store, slices, and middleware configuration.
 
 ## Setup
 
@@ -70,24 +69,3 @@ npx react-native run-android
 
 npx react-native run-ios
 ```
-
-✅ Data Fetching
-✅ Offline Access
-✅ Article Viewing
-✅ Delete Functionality
-
-✅ Favorites
-✅ Deleted Articles View
-
-Push Notification Permission
-✅ User Preferences
-✅ Background Fetch
-Notification Interaction
-
-✅ Language
-Unit Testing
-
-Functionality
-✅ Code Quality
-✅ UI/UX
-Documentation
