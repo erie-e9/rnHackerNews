@@ -1,4 +1,4 @@
-![settings](https://github.com/user-attachments/assets/07976a80-a40a-4367-b947-48f8b913d89a)## Introduction
+## Introduction
 
 This project is a React Native CLI application designed to showcase articles from Hacker News, with functionalities like favorite management, deletion, and offline caching. It also supports multiple languages and offers a fluid user experience using animations, optimized lists, and push notifications.
 
