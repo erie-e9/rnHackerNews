@@ -4,7 +4,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {useNavigation} from '@react-navigation/native';
 import {formatDistanceToNow} from 'date-fns';
 import lodash from 'lodash';
-import {ApplicationScreenProps, Article} from '@types';
+import {type ApplicationScreenProps, type Article} from '@types';
 import {useTheme, useToast} from '@hooks';
 import {cleanText} from '@utils/functions';
 import {urlValidator} from '@utils/validators';
@@ -38,6 +38,7 @@ export const ArticleItem: React.FC<ArticleItemProps> = ({
   const {Animations, Images} = useTheme();
   const animationRef = useRef<LottieViewProps>(null);
   const {checkUrl} = urlValidator();
+
   const formattedTime = useMemo(() => {
     return (
       article?.created_at &&
@@ -45,7 +46,7 @@ export const ArticleItem: React.FC<ArticleItemProps> = ({
         addSuffix: true,
       })
     );
-  }, []);
+  }, [article]);
 
   const renderRightActions = () => {
     return (
@@ -108,9 +109,7 @@ export const ArticleItem: React.FC<ArticleItemProps> = ({
       overshootRight={false}
       overshootLeft={false}
       renderRightActions={rightAction && renderRightActions}
-      renderLeftActions={leftAction && renderLeftActions}
-      // onSwipeableRightOpen={}
-    >
+      renderLeftActions={leftAction && renderLeftActions}>
       <TouchableOpacity onPress={openArticle}>
         <ItemContainer>
           <HeadItemContainer>

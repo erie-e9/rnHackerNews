@@ -100,12 +100,15 @@ export const useHome = () => {
     onFetchData: onRefresh,
     notificationTitle: getCopyValue(
       'common:alerts.notifications.newPosts.title',
+    ),
+    notificationBody: getCopyValue(
+      'common:alerts.notifications.newPosts.body',
       {
         topic,
       },
     ),
-    notificationBody: getCopyValue('common:alerts.notifications.newPosts.body'),
   });
+
   useEffect(() => {
     Logger.log('hasPermission', {isPermissionGranted});
   }, [isPermissionGranted]);

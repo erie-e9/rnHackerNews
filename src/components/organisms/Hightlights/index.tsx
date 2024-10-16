@@ -7,9 +7,10 @@ import React, {
   useRef,
 } from 'react';
 import {Image} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
-import {Article, type ApplicationScreenProps} from '@types';
+import lodash from 'lodash';
+import {formatDistanceToNow} from 'date-fns';
+import {type Article} from '@types';
 import {useTheme} from '@hooks';
 import {AnimatedButton, TransformAnimation} from '@components/animated';
 import {
@@ -25,8 +26,6 @@ import {
   OpenArticlepButtonsContainer,
   OpenFavoriteArticlepButtonContainer,
 } from './styles';
-import lodash from 'lodash';
-import {formatDistanceToNow} from 'date-fns';
 
 export interface HightlightsProps {
   article: Article;
@@ -38,10 +37,8 @@ export interface HightlightsProps {
 const Hightlights: React.FC<HightlightsProps> = ({
   article,
   leftAction,
-  rightAction,
   onTouch,
 }) => {
-  const navigation: ApplicationScreenProps = useNavigation();
   const {Images} = useTheme();
   const animationRef = useRef<LottieView>(null);
 
@@ -52,7 +49,7 @@ const Hightlights: React.FC<HightlightsProps> = ({
         addSuffix: true,
       })
     );
-  }, []);
+  }, [article]);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
