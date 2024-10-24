@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import NetInfo from '@react-native-community/netinfo';
 import { reducerTypes } from '@store/reducers';
-import { useArticles } from '@hooks'
+import { useArticles, useCheckNet, useTodos } from '@hooks';
+import { Logger } from '@services';
 
 interface UseOfflineCacheOptions<T> {
     storageKey: reducerTypes;
@@ -12,6 +12,7 @@ interface UseOfflineCacheOptions<T> {
 
 const useDispatchBySlice = (storageKey: reducerTypes) => {
     const { saveArticles, savedArticlesItems } = useArticles();
+    const { todos } = useTodos();
 
     switch (storageKey) {
         case 'articles':
@@ -19,13 +20,19 @@ const useDispatchBySlice = (storageKey: reducerTypes) => {
                 setData: (data: any) => saveArticles(data),
                 getData: () => savedArticlesItems,
             };
+        case 'todos':
+            return {
+                setData: (data: any) => Logger.log(data),
+                getData: () => todos,
+            };
         default:
             throw new Error(`Unknown reducer type: ${storageKey}`);
     }
 };
 
 export const useOfflineCache = <T>({ storageKey, data, isLoading, error }: UseOfflineCacheOptions<T>) => {
-    const [isOffline, setIsOffline] = useState(false);
+    const { appConnected } = useCheckNet();
+    const { isConnected } = appConnected;
     const [loading, setLoading] = useState(true);
     const [fetchError, setFetchError] = useState<string | null>(null);
 
@@ -34,23 +41,14 @@ export const useOfflineCache = <T>({ storageKey, data, isLoading, error }: UseOf
     const cachedData = getData();
 
     useEffect(() => {
-        const unsubscribe = NetInfo.addEventListener((state) => {
-            setIsOffline(!state.isConnected);
-        });
-        return () => {
-            unsubscribe();
-        };
-    }, []);
-
-    useEffect(() => {
-        if (!isOffline && data) {
+        if (isConnected && data) {
             setData(data);
             setFetchError(null);
         } else if (error) {
             setFetchError('Failed to fetch data');
         }
         setLoading(isLoading);
-    }, [data, isLoading, error, isOffline, setData]);
+    }, [data, isLoading, error, isConnected, setData]);
 
     return { data: cachedData, loading, error: fetchError };
 };

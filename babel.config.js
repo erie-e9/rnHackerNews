@@ -22,7 +22,6 @@ module.exports = {
           '.jpeg',
           '.jpg',
           '.svg',
-          'webp',
         ],
         alias: {
           root: ['./src'],

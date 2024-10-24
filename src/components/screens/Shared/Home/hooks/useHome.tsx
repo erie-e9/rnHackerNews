@@ -1,11 +1,12 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {format} from 'date-fns';
-import {useGetItemsQuery} from '@hooks/api';
+import {useNavigation} from '@react-navigation/native';
+import truncate from 'lodash/truncate';
 import {Logger, useCopy} from '@services';
+import {urlValidator} from '@utils/validators';
 import {filterArrayByKeys} from '@utils/functions';
 import {ApplicationScreenProps, Article} from '@types';
 import {
-  useOfflineCache,
   useArticles,
   useArticlesFavorites,
   useBackgroundWorker,
@@ -13,35 +14,28 @@ import {
   useAppPreferences,
   useNotifications,
 } from '@hooks';
-import {useNavigation} from '@react-navigation/native';
-import {urlValidator} from '@utils/validators';
 
 export const useHome = () => {
   const navigation: ApplicationScreenProps = useNavigation();
+  const {sendNotification} = useNotifications();
   const {checkUrl} = urlValidator();
   const {topic} = useAppPreferences();
-  const {getCopyValue} = useCopy();
-  const {deletedArticlesItems, removedArticles} = useArticles();
-  const {handleFavorite} = useArticlesFavorites();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const {data, isLoading, error, refetch} = useGetItemsQuery(topic);
   const {
-    data: items,
-    loading,
-    error: cacheError,
-  } = useOfflineCache({
-    storageKey: 'articles',
-    data: data?.hits,
+    data,
     isLoading,
     error,
-  });
+    refetch,
+    deletedArticlesItems,
+    removedArticles,
+  } = useArticles();
+  const {handleFavorite} = useArticlesFavorites();
 
   const articlesData = useMemo(() => {
     let articleList: Article[] = [];
     let highlightedArticle: Article | null = null;
 
-    if (items) {
-      const filteredArticles = filterArrayByKeys(items, deletedArticlesItems, [
+    if (data) {
+      const filteredArticles = filterArrayByKeys(data, deletedArticlesItems, [
         'objectID',
       ]);
       highlightedArticle = filteredArticles[0] || null;
@@ -52,7 +46,7 @@ export const useHome = () => {
       articles: articleList,
       highlightedArticle,
     };
-  }, [items, data, deletedArticlesItems]);
+  }, [data, deletedArticlesItems]);
 
   const addFavorite = useCallback(
     (article: Article) => {
@@ -68,14 +62,37 @@ export const useHome = () => {
     [removedArticles],
   );
 
+  const sendPushNotification = useCallback(async () => {
+    const url: string = data[0]?.url || data[0]?.story_url || '';
+
+    await sendNotification(
+      truncate(data[0].story_title || data[0].title, {
+        length: 40,
+        omission: '...',
+      }),
+      truncate(data[0].comment_text, {
+        length: 50,
+        omission: '...',
+      }),
+
+      // articlesData?.highlightedArticle?.story_title ||
+      //   articlesData?.highlightedArticle?.title ||
+      //   '',
+      // articlesData?.highlightedArticle?.comment_text || '',
+      // 'android',
+      'android',
+      url,
+    );
+  }, [data]);
+
   const onRefresh = useCallback(async () => {
     try {
-      setIsRefreshing(true);
+      Logger.log('onRefresh triggered');
+
       await refetch();
+      await sendPushNotification();
     } catch (error) {
       Logger.log('useHome - onRefresh', {error});
-    } finally {
-      setIsRefreshing(false);
     }
   }, [refetch]);
 
@@ -93,25 +110,6 @@ export const useHome = () => {
   useEffect(() => {
     startFetch();
   }, [status, error, startFetch]);
-
-  const {isPermissionGranted} = useNotifications({
-    backgroundWorkerTask:
-      'com.transistorsoft.getArticlesInBackgroundNotifications',
-    onFetchData: onRefresh,
-    notificationTitle: getCopyValue(
-      'common:alerts.notifications.newPosts.title',
-    ),
-    notificationBody: getCopyValue(
-      'common:alerts.notifications.newPosts.body',
-      {
-        topic,
-      },
-    ),
-  });
-
-  useEffect(() => {
-    Logger.log('hasPermission', {isPermissionGranted});
-  }, [isPermissionGranted]);
 
   const todayDate = useMemo(() => format(new Date(), 'cccc, LLLL do'), []);
 
@@ -139,11 +137,11 @@ export const useHome = () => {
     articlesData,
     deleteArticles,
     addFavorite,
-    isRefreshing,
+    isRefreshing: isLoading,
     onRefresh,
     todayDate,
-    loading,
-    cacheError,
+    loading: isLoading,
+    // cacheError,
     openArticle,
   };
 };

@@ -13,6 +13,12 @@ export const useCheckNet = (): CheckNetProps => {
   });
 
   useEffect(() => {
+    const checkConnection = async () => {
+      const state = await NetInfo.fetch();
+      setAppConnected(state);
+    };
+
+    checkConnection();
     const subscription = NetInfo.addEventListener((state) => {
       setAppConnected(state);
     });

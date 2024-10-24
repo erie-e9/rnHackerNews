@@ -27,10 +27,9 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
                     requiresCharging: false, // Set true in order to require that the device be connected to a charger for the module to do background work.
                 },
                 async () => {
-                    setStatus('active');
-                    Logger.log(`[BackgroundFetch] Task: ${taskId} is being executed`);
-
                     try {
+                        setStatus('active');
+                        Logger.log(`[BackgroundFetch] Task: ${taskId} is being executed`);
                         // Trigger background task
                         if (taskFn) await taskFn();
                         BackgroundFetch.finish(taskId); // Task finished successfully.
@@ -73,6 +72,18 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
         }
     }, [taskFn, config?.minimumFetchInterval]);
 
+    const onClickScheduleTask = useCallback(() => {
+        BackgroundFetch.scheduleTask({
+            taskId,
+            delay: 5000,
+            forceAlarmManager: true
+        }).then(() => {
+            Alert.alert('scheduleTask', 'Scheduled task with delay: 5000ms');
+        }).catch((error) => {
+            Alert.alert('scheduleTask ERROR', error);
+        });
+    }, []);
+
     const startFetch = useCallback(() => {
         BackgroundFetch.start().then(() => {
             Logger.log(`BackgroundFetch has been started`);
@@ -83,7 +94,6 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
         /* Stop method stop all background task,
             but if a taskId is passed only will pass that periodic task
         */
-
         BackgroundFetch.stop(taskId).then(() => {
             Logger.log(`BackgroundFetch has been stopped`);
         });
@@ -91,6 +101,7 @@ export const useBackgroundWorker = (taskId: string, taskFn?: () => Promise<void>
 
     useEffect(() => {
         configureFetch();
+        // onClickScheduleTask();
         // Cleanup
         return () => {
             stopFetch();

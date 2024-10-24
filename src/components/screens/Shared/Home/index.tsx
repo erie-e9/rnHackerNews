@@ -10,7 +10,7 @@ export interface HomeProps {
   navigation: ApplicationScreenProps;
 }
 
-export const DeletedArticles: React.FC<HomeProps> = ({navigation}) => {
+export const Home: React.FC<HomeProps> = ({navigation}) => {
   const useHomeHook = useHome();
 
   return (
@@ -56,4 +56,4 @@ export const DeletedArticles: React.FC<HomeProps> = ({navigation}) => {
   );
 };
 
-export default memo(DeletedArticles);
+export default memo(Home);

@@ -6,17 +6,15 @@ import {
   Storage,
 } from 'redux-persist';
 import { MMKV, Mode } from 'react-native-mmkv';
-import { api } from '@hooks/api';
+import { useTodosApi, useArticlesApi } from '@hooks/api';
 import { reducers } from '@store/reducers';
 
 const { APP_NAME, APP_ENCRYPTION_KEY } = process.env;
 
-// Use a secure method to store and retrieve your encryption key
-const encryptionKey = `${APP_NAME}-${APP_ENCRYPTION_KEY}-encryption-key`;
-
+// Configuración de MMKV para almacenamiento persistente
 export const storage = new MMKV({
   id: `user-${APP_NAME}-storage`,
-  encryptionKey,
+  encryptionKey: `${APP_NAME}-${APP_ENCRYPTION_KEY}-encryption-key`,
   mode: 'MULTI_PROCESS',
 });
 
@@ -38,7 +36,7 @@ export const reduxStorage: Storage = {
 const persistConfig = {
   key: 'root',
   storage: reduxStorage,
-  whitelist: ['appPreferences', 'articles', 'favorites'],
+  whitelist: ['appPreferences', 'articles', 'favorites', 'responseHandler', 'todos',],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -48,8 +46,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     const middlewares = getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(api.middleware);
-
+    }).concat(useTodosApi.middleware, useArticlesApi.middleware);
     if (__DEV__ && !process.env.JEST_WORKER_ID) {
       middlewares.push();
     }

@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Logger } from '@services';
-import { addFavorite, removeFavorite, toggleFavorite, deleteAllFavorites } from '@slices/shared';
-import { type FavoritesState } from '@slices/types/favorites';
+import { toggleFavorite, deleteAllFavorites } from '@slices/shared';
+import { type FavoritesState } from '@slices/types';
 import { Article } from '@types';
 
 export const useArticlesFavorites = () => {
