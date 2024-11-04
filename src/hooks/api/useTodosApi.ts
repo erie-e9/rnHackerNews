@@ -9,12 +9,12 @@ export const useTodosApi = api({
     baseUrl: process.env.API_URL_TODOS || '',
     reducerPath: 'todosApi',
     endpoints: (builder) => ({
-        getItems: builder.query({
+        getItems: builder.query<Todo[], void>({
             query: () => `posts`,
         }),
 
-        getItemById: builder.query({
-            query: (id: string | number) => `posts/${id}`,
+        getItemById: builder.query<Todo, Pick<Todo, 'id'>>({
+            query: (todo) => `posts/${todo.id}`,
         }),
 
         addItem: builder.mutation({

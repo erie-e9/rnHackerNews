@@ -4,5 +4,7 @@ include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
 include ':react-native-lottie-splash-screen'
 project(':react-native-lottie-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-lottie-splash-screen/android')
+include ':react-native-screens'
+project(':react-native-screens').projectDir = new File(rootProject.projectDir, '***-react-native/node_modules/react-native-screens/android')
 // include ':react-native-notifications'
 // project(':react-native-notifications').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-notifications/lib/android/app')
